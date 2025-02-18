@@ -1,6 +1,5 @@
 import allure
 
-from pages.auth_page import AuthPage
 from pages.main_page import MainPage
 from curl import *
 
