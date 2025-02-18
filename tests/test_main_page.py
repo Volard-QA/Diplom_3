@@ -1,5 +1,6 @@
 import allure
 
+from pages.auth_page import AuthPage
 from pages.main_page import MainPage
 from curl import *
 
@@ -10,7 +11,8 @@ class TestMainPageFunctions:
     def test_moving_to_orders_list_section(self, driver):
         main_page = MainPage(driver)
         main_page.click_orders_list_link()
-        assert driver.current_url == Url.ORDERS_LIST
+        current_url = main_page.get_current_url()
+        assert current_url == Url.ORDERS_LIST
 
     @allure.title("Проверка успешного перехода авторизованного пользователя в раздел Конструктор кликом по кнопке Конструктор")
     @allure.description("На главной странице кликнуть по кнопке Лента заказов, затем кликнуть по кнопке Конструктор, и проверить, что произошел переход в раздел Конструктор")
@@ -18,7 +20,8 @@ class TestMainPageFunctions:
         main_page = MainPage(driver)
         main_page.click_orders_list_link()
         main_page.click_constructor_link()
-        assert driver.current_url == Url.MAIN_SITE
+        current_url = main_page.get_current_url()
+        assert current_url == Url.MAIN_SITE
 
     @allure.title("Проверка успешного перехода в окно описания ингредиента кликом по ингредиенту в конструкторе")
     @allure.description("В конструкторе бургеров кликнуть по ингредиенту, проверить, что открылось окно с описанием ингредиента")

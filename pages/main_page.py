@@ -1,6 +1,8 @@
 import allure
 
+from curl import Url
 from locators.base_page_locators import BasePageLocators
+from locators.login_page_locators import LoginPageLocators
 from pages.base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 
@@ -8,7 +10,14 @@ class MainPage(BasePage):
 
     @allure.step("Авторизация пользователя")
     def user_authorization(self, email, password):
-        self.login_user(email, password)
+        self.wait_for_element_to_hide(BasePageLocators.OVERLAY)
+        self.click_on_element(BasePageLocators.ACCOUNT_BUTTON)
+        self.wait_for_page_load(Url.LOGIN_PAGE)
+        self.click_on_element(LoginPageLocators.EMAIL_FIELD)
+        self.insert_keys_into_input(LoginPageLocators.EMAIL_FIELD_ACTIVE, email)
+        self.click_on_element(LoginPageLocators.PASSWORD_FIELD)
+        self.insert_keys_into_input(LoginPageLocators.PASSWORD_FIELD_ACTIVE, password)
+        self.click_on_element(LoginPageLocators.ENTER_BUTTON)
 
     @allure.step("Клик по кнопке Конструктор в шапке")
     def click_constructor_link(self):

@@ -20,7 +20,8 @@ class TestRecoverPasswordPage:
         recover_password_page.click_recover_password_button()
         recover_password_page.insert_email(email)
         recover_password_page.click_button_recover()
-        assert driver.current_url == Url.PASSWORD_RESET_PAGE
+        current_url = recover_password_page.get_current_url()
+        assert current_url == Url.PASSWORD_RESET_PAGE
 
     @allure.title("Проверка поля Пароль на странице восстановления пароля на корректную работу подсветки поля при нажатии на кнопку в виде глаза, открывающую введенный в поле пароль")
     @allure.description("На странице ввода нового пароля нажимаем на кнопку в виде глаза и ожидаем, что поле пароля станет активным и выделится цветом ")

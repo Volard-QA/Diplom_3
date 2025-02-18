@@ -1,9 +1,6 @@
 import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from curl import *
-from locators.base_page_locators import BasePageLocators
-from locators.login_page_locators import LoginPageLocators
 
 
 class BasePage:
@@ -46,45 +43,13 @@ class BasePage:
         WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
-    @allure.step("Ожидание прогрузки страницы восстановления пароля")
-    def wait_for_recover_page_load(self, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.PASSWORD_RECOVERY_PAGE))
+    @allure.step("Ожидание прогрузки страницы")
+    def wait_for_page_load(self, url, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(url))
 
-    @allure.step("Ожидание прогрузки страницы сброса пароля")
-    def wait_for_reset_page_load(self, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.PASSWORD_RESET_PAGE))
-
-    @allure.step("Ожидание прогрузки страницы профиля пользователя")
-    def wait_for_profile_page_load(self, timeout = 10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.PROFILE_PAGE))
-
-    @allure.step("Ожидание прогрузки страницы истории заказов")
-    def wait_for_order_history_page_load(self, timeout = 10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.USER_ORDERS_PAGE))
-
-    @allure.step("Ожидание прогрузки страницы авторизации")
-    def wait_for_login_page_load(self, timeout = 10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.LOGIN_PAGE))
-
-    @allure.step("Ожидание прогрузки главной страницы")
-    def wait_for_main_page_load(self, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.MAIN_SITE))
-
-    @allure.step("Ожидание прогрузки ленты заказов")
-    def wait_for_orders_list_load(self, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(EC.url_to_be(Url.ORDERS_LIST))
-
-
-    @allure.step("Авторизация пользователя в приложении")
-    def login_user(self, email, password):
-        self.wait_for_element_to_hide(BasePageLocators.OVERLAY)
-        self.click_on_element(BasePageLocators.ACCOUNT_BUTTON)
-        self.wait_for_login_page_load()
-        self.click_on_element(LoginPageLocators.EMAIL_FIELD)
-        self.insert_keys_into_input(LoginPageLocators.EMAIL_FIELD_ACTIVE, email)
-        self.click_on_element(LoginPageLocators.PASSWORD_FIELD)
-        self.insert_keys_into_input(LoginPageLocators.PASSWORD_FIELD_ACTIVE, password)
-        self.click_on_element(LoginPageLocators.ENTER_BUTTON)
+    @allure.step("Получение Url текущей страницы")
+    def get_current_url(self):
+        return self.driver.current_url
 
     @allure.step("Перетащить элемент в корзину")
     def drag_and_drop_element(self, source, target):

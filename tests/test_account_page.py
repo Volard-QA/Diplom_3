@@ -11,7 +11,8 @@ class TestAccountPage:
         account_page = AccountPage(driver)
         account_page.user_authorization(email,password)
         account_page.click_account_button()
-        assert driver.current_url == Url.PROFILE_PAGE
+        current_url = account_page.get_current_url()
+        assert current_url == Url.PROFILE_PAGE
 
     @allure.title("Проверка успешного перехода авторизованного пользователя в раздел История Заказов на страниц аккаунта кликом по кнопке История Заказов")
     @allure.description("На странице профиля кликнуть по кнопке История Заказов и проверить, что произошел переход в раздел истории заказов")
@@ -21,7 +22,8 @@ class TestAccountPage:
         account_page.user_authorization(email, password)
         account_page.click_account_button()
         account_page.click_orders_history_button()
-        assert driver.current_url == Url.USER_ORDERS_PAGE
+        current_url = account_page.get_current_url()
+        assert current_url == Url.USER_ORDERS_PAGE
 
     @allure.title("Проверка успешного выхода авторизованного пользователя из аккаунта кликом по кнопке Выход")
     @allure.description("На странице профиля кликнуть по кнопке Выход и проверить, что произошел переход на страницу Авторизации")
@@ -31,4 +33,5 @@ class TestAccountPage:
         account_page.user_authorization(email, password)
         account_page.click_account_button()
         account_page.click_exit_account_button()
-        assert driver.current_url == Url.LOGIN_PAGE
+        current_url = account_page.get_current_url()
+        assert current_url == Url.LOGIN_PAGE

@@ -1,7 +1,9 @@
 import requests
 from curl import Url
+from pages.base_page import BasePage
 
-class AuthPage:
+
+class AuthPage(BasePage):
 
     @staticmethod
     def create_user(user_data):
